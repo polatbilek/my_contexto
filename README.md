@@ -34,3 +34,9 @@ has arguments of start and end datetimes which is explained above. Also it has `
 it will not update it if you provide it `False`, updates it if your provide `True`. `update_all_random_words` updates random words' similarities for paid users' words.
 If found in firestore, replace existing. Any found document on firestore but not found in json will be deleted. So basically it syncs your `random_playing_words.json` with firestore exactly.
 `update_new_random_words` just looks if there is a new random word found in `random_playing_words.json` but not in firestore, then updates it. 
+- To add new words you can either add it to 30k.txt and run prepare.py or you can directly add it to clean_30k.json with obeying its format. 
+If you add it directly to clean_30k.json, the first run of prepare.py will delete that word since prepare.py looks at 30k.txt and deleted content of clean_30k.json and write into it.
+If you add it to 30k.txt and run prepare.py be careful about which word you added. We clean stopwords and words with plurals (there is either "pencil" in word list or "pencils" not both).
+So your added word might be cleaned up and not shown in clean_30k.json. Just check it after prepare.py execution.
+- If you want to update arbitrary dates (like between 05.12.2024-10.12.2024 and 20.12.2024-25.12.2024) you can call update_similarity_based_on_date 2 times
+inside `if __name__ == '__main__':` with same parameters but different time ranges.

@@ -1,8 +1,18 @@
 import nltk
 import json
+import ssl
+
 from nltk.corpus import stopwords
 
-nltk.download('stopwords')
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+
+#nltk.download("stopwords")  # Open this if you haven't downloaded yet, after downloading first time, you can comment it back.
 
 
 def clean_words(file_name: str = "30k.txt", cleaned_file_name: str = "clean_30k.json"):
@@ -10,7 +20,7 @@ def clean_words(file_name: str = "30k.txt", cleaned_file_name: str = "clean_30k.
     word_dict = {}
 
     with open(file_name, "r") as f:
-        with open(cleaned_file_name, "a+") as w:
+        with open(cleaned_file_name, "w") as w:
             for line in f:
                 word = line.strip()
 
